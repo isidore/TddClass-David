@@ -6,9 +6,15 @@ namespace Playground
 {
     public class Users
     {
-        public void Register(User user)
+        public bool Register(User user)
         {
+            if (users.ContainsKey(user.UserName))
+            {
+                return false;
+            }
+
             users[user.UserName] = user;
+            return true;
         }
 
         private Dictionary<string, User> users = new Dictionary<string, User>();
