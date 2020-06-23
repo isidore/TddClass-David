@@ -41,14 +41,8 @@ namespace Playground
                 if (user.Password == password)
                 {
                     user.IsLoggedIn = true;
+                    return user;
                 }
-                else
-                {
-                    user.IsLoggedIn = false;
-                    throw new Exception("Bad Credentials");
-                }
-
-                return user;
             }
             // if the user exists
             // return the user else return nothing
