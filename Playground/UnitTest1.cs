@@ -102,6 +102,13 @@ namespace Playground
             Assert.IsFalse(scott.IsLoggedIn);
         }
 
+        [TestMethod]
+        public void TestUnknownUserCanLogOut()
+        {
+            new Users().Logout("unknown");
+            
+        }
+
         //   As an authenticated user I want to log out so that I can be unauthenticated
         //   As an authenticated seller I want to create an auction so I can sell stuff
         //   As an auction I want to be started so that I can accept bids

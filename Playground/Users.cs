@@ -57,7 +57,12 @@ namespace Playground
 
         public void Logout(string username)
         {
-            var user = FindUser((username)).IsLoggedIn = false;
+            var found = FindUser(username);
+
+            if (found != null)
+            {
+                found.IsLoggedIn = false;
+            }
         }
     }
 }
