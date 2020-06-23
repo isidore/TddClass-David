@@ -57,7 +57,7 @@ namespace Playground
         {
             var scott = GetUserScot();
             var users = new Users();
-            Assert.IsTrue(users.Register(scott));
+            users.Register(scott);
             var loggedIn = users.Login("srkirkland", "givingService");
             Assert.IsTrue(loggedIn.IsLoggedIn);
         }
@@ -67,10 +67,11 @@ namespace Playground
         {
             var scott = GetUserScot();
             var users = new Users();
-            Assert.IsTrue(users.Register(scott));
+            users.Register(scott);
             Assert.ThrowsException<Exception>(() => users.Login("srkirkland", "bogus"));
         }
 
+        // 
 
         //   As a user I want to register so that I can log in
         //   As a registered user I want to log in so I can be authenticated
