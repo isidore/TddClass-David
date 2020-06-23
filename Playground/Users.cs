@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using ApprovalTests.Core;
@@ -23,6 +24,11 @@ namespace Playground
         {
            // return user for username
            return users[userName];
+        }
+
+        public bool Login(string v1, string v2)
+        {
+            return true;
         }
     }
 }
