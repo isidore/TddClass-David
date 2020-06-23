@@ -58,7 +58,7 @@ namespace Playground
             var users = new Users();
             Assert.IsTrue(users.Register(scott));
             var loggedIn = users.Login("srkirkland", "givingService");
-            Assert.IsTrue(loggedIn);
+            Assert.IsTrue(loggedIn.IsLoggedIn);
         }
 
         //   As a user I want to register so that I can log in

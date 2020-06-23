@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using ApprovalTests.Core;
 
 namespace Playground
@@ -26,9 +27,20 @@ namespace Playground
            return users[userName];
         }
 
-        public bool Login(string v1, string v2)
+        public User Login(string username, string password)
         {
-            return true;
+            // try to find the user
+            var user = FindUser(username);
+            if (user != null)
+            {
+                if (user.Password == password)
+                {
+                    user.IsLoggedIn
+                }
+            }
+            // if the user exists
+            // return the user else return nothing
+            return null;
         }
     }
 }
