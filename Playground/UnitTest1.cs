@@ -108,8 +108,18 @@ namespace Playground
             new Users().Logout("unknown");
             
         }
+        // add seller component to user
+        // make
 
-        //   As an authenticated user I want to log out so that I can be unauthenticated
+        [TestMethod]
+        public void TestUserSeller()
+        {
+            // checking if user has seller attribute of true (indicating seller)
+
+        }
+
+
+
         //   As an authenticated seller I want to create an auction so I can sell stuff
         //   As an auction I want to be started so that I can accept bids
         //   As an authenticated bidder I want to bid on a started auction so that I can become the highest bidder
