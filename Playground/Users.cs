@@ -35,8 +35,14 @@ namespace Playground
             {
                 if (user.Password == password)
                 {
-                    user.IsLoggedIn
+                    user.IsLoggedIn = true;
+                    return user;
                 }
+                else
+                {
+                    user.IsLoggedIn = false;
+                }
+
             }
             // if the user exists
             // return the user else return nothing
