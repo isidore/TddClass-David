@@ -1,3 +1,4 @@
+using System;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using ApprovalTests;
@@ -60,6 +61,16 @@ namespace Playground
             var loggedIn = users.Login("srkirkland", "givingService");
             Assert.IsTrue(loggedIn.IsLoggedIn);
         }
+        // Scott tried to log in yesterday and used the wrong password and could not log in
+        [TestMethod, UseReporter(typeof(DiffReporter))]
+        public void TestRejectBadPassword()
+        {
+            var scott = GetUserScot();
+            var users = new Users();
+            Assert.IsTrue(users.Register(scott));
+            Assert.ThrowsException<Exception>(() => users.Login("srkirkland", "bogus"));
+        }
+
 
         //   As a user I want to register so that I can log in
         //   As a registered user I want to log in so I can be authenticated
