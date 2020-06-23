@@ -65,13 +65,29 @@ namespace Playground
         [TestMethod, UseReporter(typeof(DiffReporter))]
         public void TestRejectBadPassword()
         {
-            var scott = GetUserScot();
-            var users = new Users();
-            users.Register(scott);
-            Assert.ThrowsException<Exception>(() => users.Login("srkirkland", "bogus"));
+            var users = SetupScott(true);
+            Assert.ThrowsException<Exception>(() => users.Item1.Login("srkirkland", "bogus"));
         }
 
-        // 
+        private static Tuple<Users, User> SetupScott(bool isRegistered)
+        {
+            var scott = GetUserScot();
+            var users = new Users();
+            if (isRegistered)
+            {
+                users.Register(scott);
+            }
+            return new Tuple<Users, User>(users, scott) {};
+        }
+
+        // marie tries to log in but wasn't registered
+        [TestMethod, UseReporter(typeof(DiffReporter))]
+        public void TestCantLoginIfNotRegistered()
+        {
+            var users = SetupScott(false);
+            Assert.ThrowsException<Exception>(() => users.Item1.Login("wes", "bogus"));
+        }
+
 
         //   As a user I want to register so that I can log in
         //   As a registered user I want to log in so I can be authenticated

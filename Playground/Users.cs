@@ -24,6 +24,10 @@ namespace Playground
 
         public User FindUser(string userName)
         {
+            if (!users.ContainsKey(userName))
+            {
+                return null;
+            }
            // return user for username
            return users[userName];
         }
@@ -41,12 +45,14 @@ namespace Playground
                 else
                 {
                     user.IsLoggedIn = false;
-                    throw new Exception();
+                    throw new Exception("Bad Credentials");
                 }
+
+                return user;
             }
             // if the user exists
             // return the user else return nothing
-            return user;
+            throw new Exception("Bad Credentials");
         }
     }
 }
