@@ -54,5 +54,10 @@ namespace Playground
             // return the user else return nothing
             throw new Exception("Bad Credentials");
         }
+
+        public void Logout(string username)
+        {
+            var user = FindUser((username)).IsLoggedIn = false;
+        }
     }
 }

@@ -81,7 +81,9 @@ namespace Playground
             return (users, scott) ;
         }
 
-        // marie tries to log in but wasn't registered
+        // 
+
+        // wes tries to log in but wasn't registered
         [TestMethod]
         public void TestCantLoginIfNotRegistered()
         {
@@ -89,21 +91,22 @@ namespace Playground
             Assert.ThrowsException<Exception>(() => users.Login("wes", "bogus"));
         }
 
+        // scott wants to log out.
 
-        //   As a user I want to register so that I can log in
-        //   As a registered user I want to log in so I can be authenticated
+        [TestMethod]
+        public void TestLogOut()
+        {
+            var (users, scott) = SetupScott(true);
+            users.Login(scott.UserName, scott.Password);
+            users.Logout(scott.UserName);
+            Assert.IsFalse(scott.IsLoggedIn);
+        }
+
         //   As an authenticated user I want to log out so that I can be unauthenticated
         //   As an authenticated seller I want to create an auction so I can sell stuff
         //   As an auction I want to be started so that I can accept bids
         //   As an authenticated bidder I want to bid on a started auction so that I can become the highest bidder
 
-
-        // to log in should not be log in
-        // Scott can use the correct creditials and successfully log in
-        // scott loggged in yesterday using his username and password
-        // try to log on and not be able to log in
-        // takes a username and password and sets to true as you are logged in 
-        // enter a username and a passowrd
 
 
     }
