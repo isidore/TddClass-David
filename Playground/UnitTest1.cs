@@ -8,10 +8,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Playground
 {
     [TestClass]
+    [UseReporter(typeof(DiffReporter))]
     public class UnitTest1
     {
 
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestMethod1()
         {
             // create a user class first
@@ -21,7 +22,7 @@ namespace Playground
             //
 
         }
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestRegisterUser()
         {
             // test the register method on the users class to ensure unique user registrations
@@ -32,7 +33,7 @@ namespace Playground
             Approvals.Verify(retrieved);
 
         }
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestForExistingUser()
         {
             // Scott register srkirkland, it works. Steve also tries to register srkirkland, but he gets an error
@@ -52,7 +53,7 @@ namespace Playground
             return scott;
         }
 
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestAuthenticateUser()
         {
             var scott = GetUserScot();
@@ -62,14 +63,14 @@ namespace Playground
             Assert.IsTrue(loggedIn.IsLoggedIn);
         }
         // Scott tried to log in yesterday and used the wrong password and could not log in
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestRejectBadPassword()
         {
-            var users = SetupScott(true);
-            Assert.ThrowsException<Exception>(() => users.Item1.Login("srkirkland", "bogus"));
+            var (users,scott) = SetupScott(true);
+            Assert.ThrowsException<Exception>(() => users.Login("srkirkland", "bogus"));
         }
 
-        private static Tuple<Users, User> SetupScott(bool isRegistered)
+        private static (Users, User) SetupScott(bool isRegistered)
         {
             var scott = GetUserScot();
             var users = new Users();
@@ -77,15 +78,15 @@ namespace Playground
             {
                 users.Register(scott);
             }
-            return new Tuple<Users, User>(users, scott) {};
+            return (users, scott) ;
         }
 
         // marie tries to log in but wasn't registered
-        [TestMethod, UseReporter(typeof(DiffReporter))]
+        [TestMethod]
         public void TestCantLoginIfNotRegistered()
         {
-            var users = SetupScott(false);
-            Assert.ThrowsException<Exception>(() => users.Item1.Login("wes", "bogus"));
+            var (users, scott) = SetupScott(false);
+            Assert.ThrowsException<Exception>(() => users.Login("wes", "bogus"));
         }
 
 
