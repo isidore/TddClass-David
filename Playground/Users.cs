@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Runtime.InteropServices;
 using ApprovalTests.Core;
 
@@ -36,17 +37,16 @@ namespace Playground
                 if (user.Password == password)
                 {
                     user.IsLoggedIn = true;
-                    return user;
                 }
                 else
                 {
                     user.IsLoggedIn = false;
+                    throw new Exception();
                 }
-
             }
             // if the user exists
             // return the user else return nothing
-            return null;
+            return user;
         }
     }
 }
