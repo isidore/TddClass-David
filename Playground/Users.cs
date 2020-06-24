@@ -58,5 +58,10 @@ namespace Playground
                 found.IsLoggedIn = false;
             }
         }
+
+        public void MakeSeller(User user)
+        {
+            user.IsSeller = true;
+        }
     }
 }

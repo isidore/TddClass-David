@@ -8,6 +8,7 @@
         public string UserName { get; }
         public string Password { get; }
         public bool IsLoggedIn { get; set; }
+        public bool IsSeller { get; set; }
 
         public User(string firstName, string lastName, string email, string userName, string password)
         {

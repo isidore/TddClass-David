@@ -45,7 +45,7 @@ namespace Playground
             var retrieved2 = users.Register(steve);
             Assert.IsFalse(retrieved2);
             Assert.AreEqual(users.FindUser("srkirkland").FirstName, "Scott");
-        }
+        }     
 
         private static User GetUserScot()
         {
@@ -109,13 +109,16 @@ namespace Playground
             
         }
         // add seller component to user
-        // make
+        // scott was a seller (method of IsSeller, call it and return a true if seller, and false if not seller)
 
         [TestMethod]
-        public void TestUserSeller()
+        public void TestMakeSeller()
         {
             // checking if user has seller attribute of true (indicating seller)
-
+            //Write a test that fails by us making scott a seller and testing Is he a seller - false. Fails as well if Scott is not a seller and is asked if he is
+            var (users, scott) = SetupScott(true);
+            users.MakeSeller(scott);
+            Assert.IsTrue(scott.IsSeller);
         }
 
 
