@@ -9,12 +9,18 @@ namespace Playground
     [UseReporter(typeof(DiffReporter))]
     public class AuctionTests
     {
-        [TestMethod]
+        /*
+        – testAccessors() : verify fields are set correctly
+        – testCantCreateAuctionIfUserNotSeller() : Only sellers can create auctions
+        – testCantCreateAuctionIfSellerNotLoggedIn() : Must be loggedin to create
+        – testCantCreateAuctionIfStartTimeLessThanNow() : Start must be > now
+        – testCantCreateAuctionIfEndTimeLessThanStartTime() :End must be > start
+        */
+         [TestMethod]
         public void TestCreateAuction()
         {
-            // create a an action class
+            // create a an auction class
             // 
-            var seller = new User("John","Knoll","jpknoll@notucdavis.com","great","nowhere");
             UserTest userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
             users.MakeSeller(scott);
@@ -31,5 +37,21 @@ namespace Playground
 
         }
 
+        [TestMethod]
+        public void TestCantCreateAuctionIfUserNotSeller()
+        {
+            // create a an auction class
+            // 
+            UserTest userTest = new UserTest();
+            var (users, scott) = userTest.SetupScott(true);
+            var startTime = DateTime.Now.AddSeconds(1.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
+
+            Assert.ThrowsException<Exception>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+
+            
+            //
+
+        }
     }
 }         

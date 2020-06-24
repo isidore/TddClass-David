@@ -12,6 +12,11 @@ namespace Playground
 
         public Auction(User seller, string itemDescription, double itemPrice, DateTime startDateTime, DateTime endDateTime)
         {
+            if (!seller.IsSeller)
+            {
+                throw new Exception("User is not a seller");
+            }
+
             Seller = seller;
             ItemDescription = itemDescription;
             ItemPrice = itemPrice;

@@ -17,6 +17,7 @@
             Email = email;
             UserName = userName;
             Password = password;
+
         }
 
         public override string ToString()
