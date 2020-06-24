@@ -12,6 +12,11 @@ namespace Playground
 
         public Auction(User seller, string itemDescription, double itemPrice, DateTime startDateTime, DateTime endDateTime)
         {
+            if (!seller.IsLoggedIn)
+            {
+                throw new UserNotLoggedInException();
+            }
+
             if (!seller.IsSeller)
             {
                 throw new Exception("User is not a seller");

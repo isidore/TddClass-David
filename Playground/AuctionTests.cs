@@ -18,12 +18,11 @@ namespace Playground
         */
          [TestMethod]
         public void TestCreateAuction()
-        {
-            // create a an auction class
-            // 
-            UserTest userTest = new UserTest();
+        { 
+            var userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
             users.MakeSeller(scott);
+            //Needs to be logged in
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
             var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
@@ -40,18 +39,25 @@ namespace Playground
         [TestMethod]
         public void TestCantCreateAuctionIfUserNotSeller()
         {
-            // create a an auction class
-            // 
-            UserTest userTest = new UserTest();
+            var userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
+            users.Login(scott.UserName, scott.Password);
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
 
             Assert.ThrowsException<Exception>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+        }
 
-            
-            //
+        [TestMethod]
+        public void TestCantCreateAuctionIfNotLoggedIn()
+        {
+            var userTest = new UserTest();
+            var (users, scott) = userTest.SetupScott(true);
+            // check if user is a seller
+            var startTime = DateTime.Now.AddSeconds(1.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
 
+            Assert.ThrowsException<UserNotLoggedInException>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
         }
     }
 }         
