@@ -9,11 +9,11 @@ namespace Playground
 {
     [TestClass]
     [UseReporter(typeof(DiffReporter))]
-    public class UnitTest1
+    public class UserTest
     {
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestCreateUser()
         {
             // create a user class first
             var user = new User("firstname", "lastName", "email@email.com", "userName", "Password");
@@ -120,6 +120,7 @@ namespace Playground
             users.MakeSeller(scott);
             Assert.IsTrue(scott.IsSeller);
         }
+
 
 
 

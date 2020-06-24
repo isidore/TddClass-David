@@ -14,4 +14,13 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="UserTest.TestRegisterUser.approved.txt">
+      <DependentUpon>UserTest.cs</DependentUpon>
+    </None>
+    <None Update="UserTest.TestMethod1.approved.txt">
+      <DependentUpon>UserTest.cs</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>
