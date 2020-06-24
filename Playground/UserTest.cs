@@ -24,7 +24,7 @@ namespace Playground
         }
         [TestMethod]
         public void TestRegisterUser()
-        {
+        { 
             // test the register method on the users class to ensure unique user registrations
             var scott = GetUserScot(); var users = new Users();
                 users.Register(scott);
@@ -70,7 +70,7 @@ namespace Playground
             Assert.ThrowsException<Exception>(() => users.Login("srkirkland", "bogus"));
         }
 
-        private static (Users, User) SetupScott(bool isRegistered)
+        public  (Users, User) SetupScott(bool isRegistered)
         {
             var scott = GetUserScot();
             var users = new Users();

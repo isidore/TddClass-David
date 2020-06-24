@@ -1,0 +1,9 @@
+﻿Seller: FirstName: Scott
+ LastName: Kirkland
+ Email: srkirkland@ucdavis.edu
+ UserName: srkirkland
+ Password: givingService
+ ItemDescription: item description
+ ItemPrice: 0.1
+ StartDateTime: 6/24/2020 6:11:35 PM
+ EndDateTime: 6/24/2020 6:11:37 PM
