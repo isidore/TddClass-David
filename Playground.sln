@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{7606648E-2021-4778-ADDC-82C6C94B8FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground", "Playground\Playground.csproj", "{7606648E-2021-4778-ADDC-82C6C94B8FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBaby", "eBaby\eBaby\eBaby.csproj", "{891B6350-C7CB-4D56-8737-A6878A07DDAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBabyServices", "eBaby\eBabyServices\eBabyServices.csproj", "{FA532EF5-F719-49DC-A927-6E607743228D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBabyServicesUnitTest", "eBaby\eBabyServicesUnitTest\eBabyServicesUnitTest.csproj", "{F98F8C7E-3BA0-4028-B0AF-044D0C82B20B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBabyUnitTest", "eBaby\eBabyUnitTest\eBabyUnitTest.csproj", "{426318E8-B076-4B60-98F7-4C928424AB93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{7606648E-2021-4778-ADDC-82C6C94B8FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7606648E-2021-4778-ADDC-82C6C94B8FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7606648E-2021-4778-ADDC-82C6C94B8FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{891B6350-C7CB-4D56-8737-A6878A07DDAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891B6350-C7CB-4D56-8737-A6878A07DDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891B6350-C7CB-4D56-8737-A6878A07DDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891B6350-C7CB-4D56-8737-A6878A07DDAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA532EF5-F719-49DC-A927-6E607743228D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA532EF5-F719-49DC-A927-6E607743228D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA532EF5-F719-49DC-A927-6E607743228D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA532EF5-F719-49DC-A927-6E607743228D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98F8C7E-3BA0-4028-B0AF-044D0C82B20B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F98F8C7E-3BA0-4028-B0AF-044D0C82B20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F98F8C7E-3BA0-4028-B0AF-044D0C82B20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F98F8C7E-3BA0-4028-B0AF-044D0C82B20B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{426318E8-B076-4B60-98F7-4C928424AB93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{426318E8-B076-4B60-98F7-4C928424AB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{426318E8-B076-4B60-98F7-4C928424AB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{426318E8-B076-4B60-98F7-4C928424AB93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
