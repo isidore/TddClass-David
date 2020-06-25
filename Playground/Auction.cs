@@ -22,6 +22,10 @@ namespace Playground
                 throw new Exception("User is not a seller");
             }
 
+            if (DateTime.Now > startDateTime)
+            {
+                throw new AuctionInPastException();
+            }
             Seller = seller;
             ItemDescription = itemDescription;
             ItemPrice = itemPrice;

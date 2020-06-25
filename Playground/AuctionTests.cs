@@ -22,7 +22,7 @@ namespace Playground
             var userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
             users.MakeSeller(scott);
-            //Needs to be logged in
+            users.Login(scott.UserName, scott.Password);
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
             var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
@@ -58,6 +58,20 @@ namespace Playground
             var endTime = DateTime.Now.AddSeconds(3.0);
 
             Assert.ThrowsException<UserNotLoggedInException>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+        }
+
+        [TestMethod]
+        public void TestCantCreateAuctionIfStartTimeLessThanNow()
+        {
+            //need a seller who is logged in
+            var userTest = new UserTest();
+            var (users, scott) = userTest.SetupScott(true);
+            users.MakeSeller(scott);
+            users.Login(scott.UserName, scott.Password);
+            var startTime = DateTime.Now.AddSeconds(-8.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
+            //can't create auction that starts 8 seconds ago
+            Assert.ThrowsException<AuctionInPastException>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
         }
     }
 }         
