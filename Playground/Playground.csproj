@@ -15,6 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eBaby\eBabyServices\eBabyServices.csproj" />
+    <ProjectReference Include="..\eBaby\eBaby\eBaby.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="UserTest.TestRegisterUser.approved.txt">
       <DependentUpon>UserTest.cs</DependentUpon>
     </None>
