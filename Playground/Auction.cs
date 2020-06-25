@@ -57,5 +57,13 @@ namespace Playground
         {
             State = AuctionState.Started;
         }
+
+        public void Bid(User bidder, int bidAmount)
+        {
+            if (State == AuctionState.NotStarted)
+            {
+                throw new AuctionNotStartedCantAcceptBidException();
+            }
+        }
     }
 }

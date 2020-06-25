@@ -19,7 +19,7 @@ namespace Playground
         [TestMethod]
         public void TestCreateAuction()
         {
-            var scott = CreateLoggedInSeller();
+            var (_, scott ) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
             var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
@@ -61,7 +61,7 @@ namespace Playground
         [TestMethod]
         public void TestCantCreateAuctionIfStartTimeLessThanNow()
         {
-            var scott = CreateLoggedInSeller();
+            var (_, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(-8.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
 
@@ -73,7 +73,7 @@ namespace Playground
         public void TestCantCreateAuctionIfEndTimeLessThanStartTime()
         {
 
-            var scott = CreateLoggedInSeller();
+            var (_, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(10.0);
             var endTime = DateTime.Now.AddSeconds(8.0);
 
@@ -86,7 +86,7 @@ namespace Playground
         public void TestAuctionToAcceptBids()
         {
             // need a logged in seller?
-            var scott = CreateLoggedInSeller();
+            var (_, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
             var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
@@ -98,13 +98,43 @@ namespace Playground
             Assert.AreEqual(auction.State, AuctionState.Started);
         }
 
-        private static User CreateLoggedInSeller()
+        [TestMethod]
+        public void TestAuctionNotStartedCantAcceptBids()
+        {
+            // logged in seller 
+            (User scott, User bob, Auction auction) = CreateAuctionWorld();
+            // when the user tries to make a bid of 1 on not-started auction they get an exception
+            Assert.ThrowsException<AuctionNotStartedCantAcceptBidException>(() =>
+                auction.Bid(bob, 1));
+        }
+
+        private static (User, User, Auction) CreateAuctionWorld()
+        {
+            var (users, scott) = CreateLoggedInSeller();
+            var startTime = DateTime.Now.AddSeconds(1.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
+            var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
+            // we need a logged in user
+            var bob = new User("Bob", "Jones", "email@email.com", "bjones", "something");
+            users.Register(bob);
+            users.Login(bob.UserName, bob.Password);
+            return (scott, bob, auction);
+        }
+
+        /*
+          testAuctionNotStartedCantAcceptBids()
+          testCantAcceptBidsIfBidderIsntLoggedIn()
+          testLowerBidDoesntBecomeHighBid()
+          testHigherBidBecomesHighBid() (happy path)
+         */
+
+        private static (Users, User) CreateLoggedInSeller()
         {
             var userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
             users.MakeSeller(scott);
             users.Login(scott.UserName, scott.Password);
-            return scott;
+            return (users, scott);
         }
     }
 }
