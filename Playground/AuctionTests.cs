@@ -82,6 +82,22 @@ namespace Playground
 
         }
 
+        [TestMethod]
+        public void TestAuctionToAcceptBids()
+        {
+            // need a logged in seller?
+            var scott = CreateLoggedInSeller();
+            var startTime = DateTime.Now.AddSeconds(1.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
+            var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
+            // verify the auction status is not started
+            Assert.AreEqual(auction.State, AuctionState.NotStarted);
+            // Start the auction 
+            auction.StartAuction();
+            // verify the auction status is started
+            Assert.AreEqual(auction.State, AuctionState.Started);
+        }
+
         private static User CreateLoggedInSeller()
         {
             var userTest = new UserTest();
@@ -91,4 +107,4 @@ namespace Playground
             return scott;
         }
     }
-}         
+}
