@@ -86,7 +86,7 @@ namespace Playground
                 Bidder = bidder
             };
 
-            if (HighBid != null && currentBid.Price > HighBid.Price)
+            if (HighBid.Price < currentBid.Price)
             {
                 HighBid = currentBid;
             }
