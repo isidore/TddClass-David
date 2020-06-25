@@ -64,6 +64,11 @@ namespace Playground
             {
                 throw new AuctionNotStartedCantAcceptBidException();
             }
+
+            if (!bidder.IsLoggedIn)
+            {
+                throw new AuctionCantAcceptBidSinceBidderNotLoggedInException();
+            }
         }
     }
 }

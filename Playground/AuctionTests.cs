@@ -102,13 +102,33 @@ namespace Playground
         public void TestAuctionNotStartedCantAcceptBids()
         {
             // logged in seller 
-            (User scott, User bob, Auction auction) = CreateAuctionWorld();
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();            
             // when the user tries to make a bid of 1 on not-started auction they get an exception
             Assert.ThrowsException<AuctionNotStartedCantAcceptBidException>(() =>
                 auction.Bid(bob, 1));
         }
 
-        private static (User, User, Auction) CreateAuctionWorld()
+        [TestMethod]
+        public void TestCantAcceptBidsIfBidderIsntLoggedIn()
+        {
+            // set up auction world
+            // start the auction
+            // log out bob (bidder)
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            users.Logout(bob.UserName);
+            // when the user tries to make a bid of 1 on not-started auction they get an exception
+            Assert.ThrowsException<AuctionCantAcceptBidSinceBidderNotLoggedInException>(() =>
+                auction.Bid(bob, 1));
+            // verify that bob tries to bid of 4 and receives exception
+        }
+
+        /*
+          testLowerBidDoesntBecomeHighBid()
+          testHigherBidBecomesHighBid() (happy path)AA
+         */
+
+        private static (Users, User, User, Auction) CreateAuctionWorld()
         {
             var (users, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
@@ -118,15 +138,10 @@ namespace Playground
             var bob = new User("Bob", "Jones", "email@email.com", "bjones", "something");
             users.Register(bob);
             users.Login(bob.UserName, bob.Password);
-            return (scott, bob, auction);
+            return (users, scott, bob, auction);
         }
 
-        /*
-          testAuctionNotStartedCantAcceptBids()
-          testCantAcceptBidsIfBidderIsntLoggedIn()
-          testLowerBidDoesntBecomeHighBid()
-          testHigherBidBecomesHighBid() (happy path)
-         */
+        
 
         private static (Users, User) CreateLoggedInSeller()
         {
