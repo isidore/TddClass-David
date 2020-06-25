@@ -26,6 +26,12 @@ namespace Playground
             {
                 throw new AuctionInPastException();
             }
+
+            if (endDateTime < startDateTime)
+            {
+                throw new AuctionEndedBeforeItStartException();
+            }
+
             Seller = seller;
             ItemDescription = itemDescription;
             ItemPrice = itemPrice;

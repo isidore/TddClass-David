@@ -16,13 +16,10 @@ namespace Playground
         – testCantCreateAuctionIfStartTimeLessThanNow() : Start must be > now
         – testCantCreateAuctionIfEndTimeLessThanStartTime() :End must be > start
         */
-         [TestMethod]
+        [TestMethod]
         public void TestCreateAuction()
-        { 
-            var userTest = new UserTest();
-            var (users, scott) = userTest.SetupScott(true);
-            users.MakeSeller(scott);
-            users.Login(scott.UserName, scott.Password);
+        {
+            var scott = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
             var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
@@ -31,7 +28,7 @@ namespace Playground
             Assert.AreEqual(auction.ItemDescription, "item description");
             Assert.AreEqual(auction.ItemPrice, 0.10, 0.01);
             Assert.AreEqual(auction.StartDateTime, startTime);
-            Assert.AreEqual(auction.EndDateTime, endTime     );
+            Assert.AreEqual(auction.EndDateTime, endTime);
             //
 
         }
@@ -57,21 +54,41 @@ namespace Playground
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
 
-            Assert.ThrowsException<UserNotLoggedInException>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+            Assert.ThrowsException<UserNotLoggedInException>(() =>
+                new Auction(scott, "item description", 0.10, startTime, endTime));
         }
 
         [TestMethod]
         public void TestCantCreateAuctionIfStartTimeLessThanNow()
         {
-            //need a seller who is logged in
+            var scott = CreateLoggedInSeller();
+            var startTime = DateTime.Now.AddSeconds(-8.0);
+            var endTime = DateTime.Now.AddSeconds(3.0);
+
+            Assert.ThrowsException<AuctionInPastException>(() =>
+                new Auction(scott, "item description", 0.10, startTime, endTime));
+        }
+
+        [TestMethod]
+        public void TestCantCreateAuctionIfEndTimeLessThanStartTime()
+        {
+
+            var scott = CreateLoggedInSeller();
+            var startTime = DateTime.Now.AddSeconds(10.0);
+            var endTime = DateTime.Now.AddSeconds(8.0);
+
+            Assert.ThrowsException<AuctionEndedBeforeItStartException>(() =>
+                new Auction(scott, "item description", 0.10, startTime, endTime));
+
+        }
+
+        private static User CreateLoggedInSeller()
+        {
             var userTest = new UserTest();
             var (users, scott) = userTest.SetupScott(true);
             users.MakeSeller(scott);
             users.Login(scott.UserName, scott.Password);
-            var startTime = DateTime.Now.AddSeconds(-8.0);
-            var endTime = DateTime.Now.AddSeconds(3.0);
-            //can't create auction that starts 8 seconds ago
-            Assert.ThrowsException<AuctionInPastException>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+            return scott;
         }
     }
 }         
