@@ -139,18 +139,36 @@ namespace Playground
             Assert.AreEqual(200, auction.HighBid.Price);
         }
 
+        [TestMethod]
+        public void TestHigherBidBecomesHighBid()
+        {
+            // create started auction with item price of 1
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            // create brenda
+            var brenda = new User("brenda", "Jones", "email@email.com", "brendajones", "something");
+            users.Register(brenda);
+            users.Login(brenda.UserName, brenda.Password);
+            // brenda bids 2
+            auction.Bid(brenda, 2);
+            // verify high bid is 2 and it's brenda
+            Assert.AreEqual(brenda, auction.HighBid.Bidder);
+            Assert.AreEqual(2, auction.HighBid.Price);
+            // bob bids 5
+            auction.Bid(bob, 5);
+            Assert.AreEqual(bob, auction.HighBid.Bidder);
+            Assert.AreEqual(5, auction.HighBid.Price);
+            // verify high bid is 5 and it's bob
+        }
 
-        /*
-          
-          testHigherBidBecomesHighBid() (happy path)AA
-         */
+     
 
         private static (Users, User, User, Auction) CreateAuctionWorld()
         {
             var (users, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
-            var auction = new Auction(scott, "item description", 10, startTime, endTime);
+            var auction = new Auction(scott, "item description", 2, startTime, endTime);
             // we need a logged in user
             var bob = new User("Bob", "Jones", "email@email.com", "bjones", "something");
             users.Register(bob);
