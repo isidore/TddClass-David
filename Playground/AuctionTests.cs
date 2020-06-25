@@ -22,11 +22,11 @@ namespace Playground
             var (_, scott ) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
-            var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
+            var auction = new Auction(scott, "item description", 10, startTime, endTime);
 
             Assert.AreEqual(auction.Seller, scott);
             Assert.AreEqual(auction.ItemDescription, "item description");
-            Assert.AreEqual(auction.ItemPrice, 0.10, 0.01);
+            Assert.AreEqual(auction.ItemPrice, 10);
             Assert.AreEqual(auction.StartDateTime, startTime);
             Assert.AreEqual(auction.EndDateTime, endTime);
             //
@@ -42,7 +42,7 @@ namespace Playground
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
 
-            Assert.ThrowsException<Exception>(() => new Auction(scott, "item description", 0.10, startTime, endTime));
+            Assert.ThrowsException<Exception>(() => new Auction(scott, "item description", 10, startTime, endTime));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace Playground
             var endTime = DateTime.Now.AddSeconds(3.0);
 
             Assert.ThrowsException<UserNotLoggedInException>(() =>
-                new Auction(scott, "item description", 0.10, startTime, endTime));
+                new Auction(scott, "item description", 10, startTime, endTime));
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Playground
             var endTime = DateTime.Now.AddSeconds(3.0);
 
             Assert.ThrowsException<AuctionInPastException>(() =>
-                new Auction(scott, "item description", 0.10, startTime, endTime));
+                new Auction(scott, "item description", 10, startTime, endTime));
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace Playground
             var endTime = DateTime.Now.AddSeconds(8.0);
 
             Assert.ThrowsException<AuctionEndedBeforeItStartException>(() =>
-                new Auction(scott, "item description", 0.10, startTime, endTime));
+                new Auction(scott, "item description", 10, startTime, endTime));
 
         }
 
@@ -89,7 +89,7 @@ namespace Playground
             var (_, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
-            var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
+            var auction = new Auction(scott, "item description", 10, startTime, endTime);
             // verify the auction status is not started
             Assert.AreEqual(auction.State, AuctionState.NotStarted);
             // Start the auction 
@@ -105,7 +105,7 @@ namespace Playground
             (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();            
             // when the user tries to make a bid of 1 on not-started auction they get an exception
             Assert.ThrowsException<AuctionNotStartedCantAcceptBidException>(() =>
-                auction.Bid(bob, 1));
+                auction.Bid(bob, 100));
         }
 
         [TestMethod]
@@ -123,8 +123,25 @@ namespace Playground
             // verify that bob tries to bid of 4 and receives exception
         }
 
+        [TestMethod]
+        public void TestLowerBidDoesntBecomeHighBid()
+        {
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            auction.Bid(bob, 200);
+
+            // verify that the high bid is 2
+            Assert.AreEqual(200, auction.HighBid.Price);
+            // bob submits lower bid of 1
+            auction.Bid(bob, 100);
+
+            // verify that high bid doesn't change
+            Assert.AreEqual(200, auction.HighBid.Price);
+        }
+
+
         /*
-          testLowerBidDoesntBecomeHighBid()
+          
           testHigherBidBecomesHighBid() (happy path)AA
          */
 
@@ -133,7 +150,7 @@ namespace Playground
             var (users, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
             var endTime = DateTime.Now.AddSeconds(3.0);
-            var auction = new Auction(scott, "item description", 0.10, startTime, endTime);
+            var auction = new Auction(scott, "item description", 10, startTime, endTime);
             // we need a logged in user
             var bob = new User("Bob", "Jones", "email@email.com", "bjones", "something");
             users.Register(bob);
