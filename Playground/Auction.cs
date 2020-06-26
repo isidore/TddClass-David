@@ -113,20 +113,27 @@ namespace Playground
 
             if (HighBid.Bidder == null)
             {
-                return GetEmailsForNoBids(ItemDescription, Seller);
+                return GetEmailsForNoBids(HighBid,ItemDescription, Seller);
             }
             else
             {
-                var emails = new Dictionary<string, string>();
-                emails.Add(Seller.Email, $"Your {ItemDescription} auction sold to bidder {HighBid.Bidder.Email} for {HighBid.Price}.");
-                emails.Add(HighBid.Bidder.Email, $"Congratulations! You won an auction for a {ItemDescription} from {Seller.Email} for {HighBid.Price}");
-                return emails;
+                return GetEmailsForBids(HighBid, ItemDescription, Seller);
             }
 
             
         }
 
-        private static Dictionary<string, string> GetEmailsForNoBids(string itemDescription, User seller)
+        private static Dictionary<string, string> GetEmailsForBids(Bid highBid, string itemDescription, User seller)
+        {
+            var emails = new Dictionary<string, string>();
+            emails.Add(seller.Email,
+                $"Your {itemDescription} auction sold to bidder {highBid.Bidder.Email} for {highBid.Price}.");
+            emails.Add(highBid.Bidder.Email,
+                $"Congratulations! You won an auction for a {itemDescription} from {seller.Email} for {highBid.Price}");
+            return emails;
+        }
+
+        private static Dictionary<string, string> GetEmailsForNoBids(Bid highBid, string itemDescription, User seller)
         {
             var emails = new Dictionary<string, string>();
             //send email to seller
