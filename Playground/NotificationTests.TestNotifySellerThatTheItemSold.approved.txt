@@ -1,0 +1,2 @@
+﻿email@email.com => Congratulations! You won an auction for a item description from srkirkland@ucdavis.edu for 5
+srkirkland@ucdavis.edu => Your item description auction sold to bidder email@email.com for 5.

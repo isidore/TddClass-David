@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using eBabyServices;
 
 namespace Playground
@@ -98,11 +99,31 @@ namespace Playground
         public void EndAuction()
         {
             State = AuctionState.Closed;
+            var emails = GetClosingEmailNotifications();
+
+            foreach (var email in emails)
+            {
+                PostOffice.GetInstance().SendEMail(email.Key, email.Value);
+            }
+        }
+
+        public Dictionary<string, string> GetClosingEmailNotifications()
+        {
+            var emails = new Dictionary<string, string>();
+
             if (HighBid.Bidder == null)
             {
                 //send email to seller
-                PostOffice.GetInstance().SendEMail(Seller.Email, $"Sorry, your auction for {ItemDescription} did not have any bidders.");
+                emails.Add(Seller.Email, $"Sorry, your auction for {ItemDescription} did not have any bidders.");
             }
+            else
+            {
+                emails.Add(Seller.Email, $"Your {ItemDescription} auction sold to bidder {HighBid.Bidder.Email} for {HighBid.Price}.");
+                emails.Add(HighBid.Bidder.Email, $"Congratulations! You won an auction for a {ItemDescription} from {Seller.Email} for {HighBid.Price}");
+
+            }
+
+            return emails;
         }
     }
 
