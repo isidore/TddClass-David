@@ -113,7 +113,7 @@ namespace Playground
 
             if (HighBid.Bidder == null)
             {
-                return GetEmailsForNoBids(HighBid,ItemDescription, Seller);
+                return NoBidCloser.GetEmailsForNoBids(HighBid,ItemDescription, Seller);
             }
             else
             {
@@ -130,14 +130,6 @@ namespace Playground
                 $"Your {itemDescription} auction sold to bidder {highBid.Bidder.Email} for {highBid.Price}.");
             emails.Add(highBid.Bidder.Email,
                 $"Congratulations! You won an auction for a {itemDescription} from {seller.Email} for {highBid.Price}");
-            return emails;
-        }
-
-        private static Dictionary<string, string> GetEmailsForNoBids(Bid highBid, string itemDescription, User seller)
-        {
-            var emails = new Dictionary<string, string>();
-            //send email to seller
-            emails.Add(seller.Email, $"Sorry, your auction for {itemDescription} did not have any bidders.");
             return emails;
         }
     }
