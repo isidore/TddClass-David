@@ -1,4 +1,5 @@
 ﻿using System;
+using eBabyServices;
 
 namespace Playground
 {
@@ -9,7 +10,7 @@ namespace Playground
         Closed
     }
 
-    internal class Auction
+    public class Auction
     {
         public User Seller { get; }
         public string ItemDescription { get; }
@@ -97,6 +98,11 @@ namespace Playground
         public void EndAuction()
         {
             State = AuctionState.Closed;
+            if (HighBid.Bidder == null)
+            {
+                //send email to seller
+                PostOffice.GetInstance().SendEMail(Seller.Email, $"Sorry, your auction for {ItemDescription} did not have any bidders.");
+            }
         }
     }
 

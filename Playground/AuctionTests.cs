@@ -188,10 +188,7 @@ namespace Playground
         // Log all sales over $10,000
 
 
-
-
-
-        private static (Users, User, User, Auction) CreateAuctionWorld()
+        public static (Users, User, User, Auction) CreateAuctionWorld()
         {
             var (users, scott) = CreateLoggedInSeller();
             var startTime = DateTime.Now.AddSeconds(1.0);
