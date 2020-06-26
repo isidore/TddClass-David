@@ -17,7 +17,7 @@ namespace Playground
         {
             (Users users, User scott, User bob, Auction auction) =AuctionTests.CreateAuctionWorld();
             auction.StartAuction();
-            auction.OnClose();
+            auction.EndAuction();
             Approvals.Verify(PostOffice.GetInstance().FindEmail(scott.Email, auction.ItemDescription));
         }
 
@@ -45,4 +45,10 @@ namespace Playground
     }
 
 }
+/*
+If an auction closes with no bidders then notify the seller “Sorry, your auction for <itemName> did not have any bidders.” 
+If an auction closes with at least one bid then notify the seller “Your <itemName> auction sold to bidder <bidderEmail> for <highBidAmount>.”
 
+notify the high bidder “Congratulations! You won an auction for a <itemName> from <sellerEmail> for <highBidAmount>.” 
+
+ */

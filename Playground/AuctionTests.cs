@@ -171,7 +171,7 @@ namespace Playground
 
             // start auction
             // close the auction
-            auction.OnClose();
+            auction.EndAuction();
             Assert.AreEqual(AuctionState.Closed, auction.State);
             // verify auction closed
         }
