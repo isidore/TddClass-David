@@ -109,21 +109,24 @@ namespace Playground
 
         public Dictionary<string, string> GetClosingEmailNotifications()
         {
-            var emails = new Dictionary<string, string>();
+            
 
             if (HighBid.Bidder == null)
             {
+                var emails = new Dictionary<string, string>();
                 //send email to seller
                 emails.Add(Seller.Email, $"Sorry, your auction for {ItemDescription} did not have any bidders.");
+                return emails;
             }
             else
             {
+                var emails = new Dictionary<string, string>();
                 emails.Add(Seller.Email, $"Your {ItemDescription} auction sold to bidder {HighBid.Bidder.Email} for {HighBid.Price}.");
                 emails.Add(HighBid.Bidder.Email, $"Congratulations! You won an auction for a {ItemDescription} from {Seller.Email} for {HighBid.Price}");
-
+                return emails;
             }
 
-            return emails;
+            
         }
     }
 
