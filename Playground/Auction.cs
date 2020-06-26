@@ -117,20 +117,10 @@ namespace Playground
             }
             else
             {
-                return GetEmailsForBids(HighBid, ItemDescription, Seller);
+                return BidCloser.GetEmailsForBids(HighBid, ItemDescription, Seller);
             }
 
             
-        }
-
-        private static Dictionary<string, string> GetEmailsForBids(Bid highBid, string itemDescription, User seller)
-        {
-            var emails = new Dictionary<string, string>();
-            emails.Add(seller.Email,
-                $"Your {itemDescription} auction sold to bidder {highBid.Bidder.Email} for {highBid.Price}.");
-            emails.Add(highBid.Bidder.Email,
-                $"Congratulations! You won an auction for a {itemDescription} from {seller.Email} for {highBid.Price}");
-            return emails;
         }
     }
 
