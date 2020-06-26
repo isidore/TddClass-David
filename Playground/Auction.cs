@@ -93,6 +93,11 @@ namespace Playground
 
 
         }
+
+        public void EndAuction()
+        {
+            State = AuctionState.Closed;
+        }
     }
 
     public class Bid
