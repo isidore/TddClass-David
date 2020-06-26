@@ -113,11 +113,13 @@ namespace Playground
 
             if (HighBid.Bidder == null)
             {
-                return NoBidCloser.GetEmailsForNoBids(HighBid,ItemDescription, Seller);
+                var closer = new NoBidCloser();
+                return closer.GetEmailsForClose(HighBid,ItemDescription, Seller);
             }
             else
             {
-                return BidCloser.GetEmailsForBids(HighBid, ItemDescription, Seller);
+                var closer = new BidCloser();
+                return closer.GetEmailsForClose(HighBid, ItemDescription, Seller);
             }
 
             

@@ -2,9 +2,9 @@
 
 namespace Playground
 {
-    internal class BidCloser
+    public class BidCloser
     {
-        private static Dictionary<string, string> GetEmailsForBids(Bid highBid, string itemDescription, User seller)
+        public Dictionary<string, string> GetEmailsForClose(Bid highBid, string itemDescription, User seller)
         {
             var emails = new Dictionary<string, string>();
             emails.Add(seller.Email,

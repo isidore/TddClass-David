@@ -4,7 +4,7 @@ namespace Playground
 {
     public class NoBidCloser
     {
-        public static Dictionary<string, string> GetEmailsForNoBids(Bid highBid, string itemDescription, User seller)
+        public Dictionary<string, string> GetEmailsForClose(Bid highBid, string itemDescription, User seller)
         {
             var emails = new Dictionary<string, string>();
             //send email to seller
