@@ -96,7 +96,7 @@ namespace Playground
 
         }
 
-        public void EndAuction()
+        public void OnClose()
         {
             State = AuctionState.Closed;
             var emails = GetClosingEmailNotifications();
@@ -106,6 +106,14 @@ namespace Playground
                 PostOffice.GetInstance().SendEMail(email.Key, email.Value);
             }
         }
+
+        //Making a factory
+        //Make Auction Close Notifier Factory
+        //method: get auction closer takes an auction and returns an auction close notifation
+        //we need an empty auction notifier close no sale
+        //not empty auction notifier close sale
+        // get closing email notification (seller and the highest bid) return notification
+
 
         public Dictionary<string, string> GetClosingEmailNotifications()
         {
