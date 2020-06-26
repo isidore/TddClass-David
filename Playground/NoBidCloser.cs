@@ -2,7 +2,7 @@
 
 namespace Playground
 {
-    public class NoBidCloser
+    public class NoBidCloser : IAuctionCloser
     {
         public Dictionary<string, string> GetEmailsForClose(Bid highBid, string itemDescription, User seller)
         {

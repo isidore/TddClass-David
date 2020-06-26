@@ -109,22 +109,12 @@ namespace Playground
 
         public Dictionary<string, string> GetClosingEmailNotifications()
         {
-            
+            var closer = AuctionCloserFactory.GetAuctionCloser(HighBid);
 
-            if (HighBid.Bidder == null)
-            {
-                var closer = new NoBidCloser();
-                return closer.GetEmailsForClose(HighBid,ItemDescription, Seller);
-            }
-            else
-            {
-                var closer = new BidCloser();
-                return closer.GetEmailsForClose(HighBid, ItemDescription, Seller);
-            }
-
-            
+            return closer.GetEmailsForClose(HighBid, ItemDescription, Seller);
         }
     }
+
 
     public class Bid
     {

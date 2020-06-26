@@ -2,7 +2,7 @@
 
 namespace Playground
 {
-    public class BidCloser
+    public class BidCloser : IAuctionCloser
     {
         public Dictionary<string, string> GetEmailsForClose(Bid highBid, string itemDescription, User seller)
         {
