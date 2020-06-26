@@ -15,6 +15,7 @@ namespace Playground
         [TestMethod]
         public void TestNotifySellerNoBidders()
         {
+            PostOffice.GetInstance().Clear();
             (Users users, User scott, User bob, Auction auction) =AuctionTests.CreateAuctionWorld();
             auction.StartAuction();
             auction.EndAuction();
