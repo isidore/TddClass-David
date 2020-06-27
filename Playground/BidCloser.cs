@@ -13,5 +13,10 @@ namespace Playground
                 $"Congratulations! You won an auction for a {itemDescription} from {seller.Email} for {highBid.Price}");
             return emails;
         }
+
+        public bool IsValidFor(Bid highBid)
+        {
+            return highBid.Bidder != null;
+        }
     }
 }

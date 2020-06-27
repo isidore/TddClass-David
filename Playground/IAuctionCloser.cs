@@ -5,5 +5,7 @@ namespace Playground
     public interface IAuctionCloser
     {
         Dictionary<string, string> GetEmailsForClose(Bid highBid, string itemDescription, User seller);
+
+        bool IsValidFor(Bid highBid);
     }
 }

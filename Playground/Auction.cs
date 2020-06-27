@@ -109,9 +109,7 @@ namespace Playground
 
         public Dictionary<string, string> GetClosingEmailNotifications()
         {
-            var closer = AuctionCloserFactory.GetAuctionCloser(HighBid);
-
-            return closer.GetEmailsForClose(HighBid, ItemDescription, Seller);
+            return AuctionCloserFactory.GetAuctionCloser(HighBid).GetEmailsForClose(HighBid, ItemDescription, Seller);
         }
     }
 

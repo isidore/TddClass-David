@@ -1,20 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Playground;
 
 public class AuctionCloserFactory
 {
     public static IAuctionCloser GetAuctionCloser(Bid highBid)
     {
-        IAuctionCloser closer;
-        if (highBid.Bidder == null)
-        {
-            closer = new NoBidCloser();
-        }
-        else
-        {
-            closer = new BidCloser();
-        }
-
-        return closer;
+        return new List<IAuctionCloser>() {new NoBidCloser(), new BidCloser()}.FirstOrDefault(closer => closer.IsValidFor(highBid));
     }
 }

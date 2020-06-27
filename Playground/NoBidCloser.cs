@@ -11,5 +11,10 @@ namespace Playground
             emails.Add(seller.Email, $"Sorry, your auction for {itemDescription} did not have any bidders.");
             return emails;
         }
+
+        public bool IsValidFor(Bid highBid)
+        {
+            return highBid.Bidder == null;
+        }
     }
 }
