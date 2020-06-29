@@ -127,8 +127,13 @@ namespace Playground
             {
                 ShippingFee = 1000;
             }
-            var emails = GetClosingEmailNotifications();
 
+            if (HighBid.Price > 10_000_00)
+            {
+                logger.Log($"{Seller.UserName} is selling an item of {HighBid.Price} ");
+            }
+
+            var emails = GetClosingEmailNotifications();
             foreach (var email in emails)
             {
                 PostOffice.GetInstance().SendEMail(email.Key, email.Value);

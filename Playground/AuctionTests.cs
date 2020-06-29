@@ -253,6 +253,19 @@ namespace Playground
             Approvals.Verify(auction.GetLogs());
         }
 
+
+        [TestMethod]
+        public void TestLoggingAllSalesOver10_000()
+        {
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            var bidAmount = 11_000_00;
+            auction.Bid(bob, bidAmount);
+            auction.EndAuction();
+            // verify that we logged sales over 1000000
+            Approvals.Verify(auction.GetLogs());
+        }
+
         [TestMethod]
         public void TestPlainAuctionBidderFeesForLuxuryCar()
         {
@@ -271,8 +284,8 @@ namespace Playground
             Assert.AreEqual((1.04*bidAmount + 100000) , auction.FinalPrice);
         }
   
-        // As an auction I want to log certain sales so that I have an audit trail
-        // Log all car sales
+
+
         // Log all sales over $10,000
 
 
