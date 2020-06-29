@@ -22,8 +22,9 @@ namespace Playground
         public Bid HighBid { get; private set; }
         public int AmountToSeller => (int) (HighBid.Price * 0.98);
         public int ShippingFee { get; private set; }
-        public int FinalPrice => (int)(HighBid.Price + ShippingFee);
+        public int FinalPrice => (int)(HighBid.Price + ShippingFee + LuxuryTax);
         public AuctionCategory Category { get; set; }
+        public int LuxuryTax { get; private set; }
 
 
         public Auction(User seller, string itemDescription, int itemPrice, DateTime startDateTime, DateTime endDateTime)
@@ -112,6 +113,10 @@ namespace Playground
             else if (Category == AuctionCategory.Car)
             {
                 ShippingFee = 100000;
+                if (HighBid.Price > 5000000)
+                {
+                    LuxuryTax = (int) (HighBid.Price * 0.04);
+                }
             }
             else
             {
