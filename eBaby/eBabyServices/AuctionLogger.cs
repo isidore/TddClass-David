@@ -140,5 +140,10 @@ namespace eBabyServices
             }
             return logReader;
         }
+
+        public string GetAllMessages()
+        {
+            return  File.ReadAllText(m_File.FullName)  ;
+        }
     }
 }

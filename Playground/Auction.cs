@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using ApprovalTests.Core;
 using eBabyServices;
 
 namespace Playground
@@ -13,6 +15,7 @@ namespace Playground
 
     public class Auction
     {
+        private AuctionLogger logger = new AuctionLogger(Path.GetTempFileName());
         public User Seller { get; }
         public string ItemDescription { get; }
         public  int ItemPrice { get; }
@@ -112,11 +115,13 @@ namespace Playground
 
             else if (Category == AuctionCategory.Car)
             {
+                logger.Log($"{Seller.UserName} is selling a {ItemDescription} ");
                 ShippingFee = 100000;
                 if (HighBid.Price > 5000000)
                 {
                     LuxuryTax = (int) (HighBid.Price * 0.04);
                 }
+
             }
             else
             {
@@ -133,6 +138,11 @@ namespace Playground
         public Dictionary<string, string> GetClosingEmailNotifications()
         {
             return AuctionCloserFactory.GetAuctionCloser(HighBid).GetEmailsForClose(HighBid, ItemDescription, Seller);
+        }
+
+        public string GetLogs()
+        {
+           return logger.GetAllMessages();
         }
     }
 

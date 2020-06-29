@@ -237,11 +237,40 @@ namespace Playground
             Assert.AreEqual(bidAmount+100000,auction.FinalPrice);
         }
 
-        
-        //user//story 8
 
+        [TestMethod]
+        public void TestLoggingCarSales()
+        {
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            // set auction category to car
+            auction.Category = AuctionCategory.Car;
+            auction.StartAuction();
+            var bidAmount = 800;
+            auction.Bid(bob, bidAmount);
+            auction.EndAuction();
 
-        // If a car sold for over $50,000 add 4% luxury tax
+            // verify that we logged the car sale
+            Approvals.Verify(auction.GetLogs());
+        }
+
+        [TestMethod]
+        public void TestPlainAuctionBidderFeesForLuxuryCar()
+        {
+            //setup auction world
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            // set auction category to car
+            auction.Category = AuctionCategory.Car;
+            auction.StartAuction();
+            var bidAmount = 600000000;
+            auction.Bid(bob, bidAmount);
+            auction.EndAuction();
+            // verify that shipping fee is 100,000
+            Assert.AreEqual(100000, auction.ShippingFee);
+            Assert.AreEqual(bidAmount*0.04, auction.LuxuryTax);
+            // verify that the final price is the same as the high bid amount + 100,000 + luxury tax
+            Assert.AreEqual((1.04*bidAmount + 100000) , auction.FinalPrice);
+        }
+  
         // As an auction I want to log certain sales so that I have an audit trail
         // Log all car sales
         // Log all sales over $10,000
