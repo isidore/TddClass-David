@@ -175,8 +175,26 @@ namespace Playground
             Assert.AreEqual(AuctionState.Closed, auction.State);
             // verify auction closed
         }
-        //If an auction closes with no bidders then notify the seller “Sorry, your auction for <itemName> did not have any bidders.” 
-        // If an auction closes with at least one bid then notify the seller “Your<itemName> auction sold to bidder<bidderEmail> for <highBidAmount>.” and notify the high bidder “Congratulations! You won an auction for a<itemName> from<sellerEmail> for <highBidAmount>.” 
+
+        [TestMethod]
+        public void TestAuctionHandleSellerFees()
+        {
+            //auction world 
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            auction.Bid(bob, 1000);
+            //bidder of 1000 
+            auction.EndAuction();
+            //close auction
+            Assert.AreEqual(980, auction.AmountToSeller);
+            //verify amount to seller is 98% (980) of high bid at close
+        }
+
+        //[TestMethod]
+        public void TestAuctionHandleBidderFees()
+        {
+            //verify 
+        }
         //user//story 8
         // As an auction I want to adjust the price of a sale so that I can handle fees
         // To the seller’s amount: Subtract a 2% transaction fee

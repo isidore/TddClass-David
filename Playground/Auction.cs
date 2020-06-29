@@ -20,6 +20,7 @@ namespace Playground
         public DateTime EndDateTime { get; }
         public AuctionState State { get; internal set; }
         public Bid HighBid { get; private set; }
+        public int AmountToSeller => (int) (HighBid.Price * 0.98);
 
 
         public Auction(User seller, string itemDescription, int itemPrice, DateTime startDateTime, DateTime endDateTime)
