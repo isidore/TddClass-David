@@ -200,9 +200,31 @@ namespace Playground
             auction.EndAuction();
             Assert.AreEqual(1000,auction.ShippingFee);
             Assert.AreEqual(1800,auction.FinalPrice);
+        } 
+        
+        [TestMethod]
+        public void TestPlainAuctionBidderShippingFeesForSoftware()
+        {
+
+            //setup auction world
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            // set auction category to dl software
+            auction.Category = AuctionCategory.DownloadableSoftware;
+            auction.StartAuction();
+
+            var bidAmount = 700;
+            auction.Bid(bob, bidAmount);
+            auction.EndAuction();
+            // verify that shipping fee is 0
+            Assert.AreEqual(0,auction.ShippingFee);
+            // verify that the final price is the same as the high bid amount
+            Assert.AreEqual(bidAmount,auction.FinalPrice);
         }
+
+        
         //user//story 8
- // To the high bidder’s amount: add $10 shipping fees for all items sold unless the item category is
+ // To the high bidder’s amount: add $10 shipping fees for all items
+ // sold unless the item category is
  // Downloadable Software (or a car)
         // If the item is a car add $1000 shipping fee
         // If a car sold for over $50,000 add 4% luxury tax

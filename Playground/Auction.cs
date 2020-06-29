@@ -21,8 +21,9 @@ namespace Playground
         public AuctionState State { get; internal set; }
         public Bid HighBid { get; private set; }
         public int AmountToSeller => (int) (HighBid.Price * 0.98);
-        public int ShippingFee => 1000;
+        public int ShippingFee { get; private set; }
         public int FinalPrice => (int)(HighBid.Price + ShippingFee);
+        public AuctionCategory Category { get; set; }
 
 
         public Auction(User seller, string itemDescription, int itemPrice, DateTime startDateTime, DateTime endDateTime)
@@ -103,7 +104,14 @@ namespace Playground
         {
             State = AuctionState.Closed;
             //calculate shipping fee
-
+            if (Category == AuctionCategory.DownloadableSoftware)
+            {
+                ShippingFee = 0;
+            }
+            else
+            {
+                ShippingFee = 1000;
+            }
             var emails = GetClosingEmailNotifications();
 
             foreach (var email in emails)
