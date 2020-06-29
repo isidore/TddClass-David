@@ -190,15 +190,20 @@ namespace Playground
             //verify amount to seller is 98% (980) of high bid at close
         }
 
-        //[TestMethod]
-        public void TestAuctionHandleBidderFees()
+        [TestMethod]
+        public void TestPlainAuctionBidderShippingFees()
         {
-            //verify 
+            //setup auction world
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            auction.StartAuction();
+            auction.Bid(bob, 800);
+            auction.EndAuction();
+            Assert.AreEqual(1000,auction.ShippingFee);
+            Assert.AreEqual(1800,auction.FinalPrice);
         }
         //user//story 8
-        // As an auction I want to adjust the price of a sale so that I can handle fees
-        // To the seller’s amount: Subtract a 2% transaction fee
-        // To the high bidder’s amount: add $10 shipping fees for all items sold unless the item category is Downloadable Software (or a car)
+ // To the high bidder’s amount: add $10 shipping fees for all items sold unless the item category is
+ // Downloadable Software (or a car)
         // If the item is a car add $1000 shipping fee
         // If a car sold for over $50,000 add 4% luxury tax
         // As an auction I want to log certain sales so that I have an audit trail

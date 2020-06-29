@@ -21,6 +21,8 @@ namespace Playground
         public AuctionState State { get; internal set; }
         public Bid HighBid { get; private set; }
         public int AmountToSeller => (int) (HighBid.Price * 0.98);
+        public int ShippingFee => 1000;
+        public int FinalPrice => (int)(HighBid.Price + ShippingFee);
 
 
         public Auction(User seller, string itemDescription, int itemPrice, DateTime startDateTime, DateTime endDateTime)
@@ -100,6 +102,8 @@ namespace Playground
         public void EndAuction()
         {
             State = AuctionState.Closed;
+            //calculate shipping fee
+
             var emails = GetClosingEmailNotifications();
 
             foreach (var email in emails)
