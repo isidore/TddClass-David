@@ -108,6 +108,11 @@ namespace Playground
             {
                 ShippingFee = 0;
             }
+
+            else if (Category == AuctionCategory.Car)
+            {
+                ShippingFee = 100000;
+            }
             else
             {
                 ShippingFee = 1000;

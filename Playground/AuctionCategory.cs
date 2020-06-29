@@ -3,6 +3,7 @@
     public enum AuctionCategory
     {
         None,
-        DownloadableSoftware
+        DownloadableSoftware,
+        Car
     }
 }

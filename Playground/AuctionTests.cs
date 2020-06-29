@@ -219,14 +219,28 @@ namespace Playground
             Assert.AreEqual(0,auction.ShippingFee);
             // verify that the final price is the same as the high bid amount
             Assert.AreEqual(bidAmount,auction.FinalPrice);
+        }       
+        [TestMethod]
+        public void TestPlainAuctionBidderShippingFeesForCar()
+        {
+            //setup auction world
+            (Users users, User scott, User bob, Auction auction) = CreateAuctionWorld();
+            // set auction category to car
+            auction.Category = AuctionCategory.Car;
+            auction.StartAuction();
+            var bidAmount = 700;
+            auction.Bid(bob, bidAmount);
+            auction.EndAuction();
+            // verify that shipping fee is 100,000
+            Assert.AreEqual(100000,auction.ShippingFee);
+            // verify that the final price is the same as the high bid amount + 100,000
+            Assert.AreEqual(bidAmount+100000,auction.FinalPrice);
         }
 
         
         //user//story 8
- // To the high bidder’s amount: add $10 shipping fees for all items
- // sold unless the item category is
- // Downloadable Software (or a car)
-        // If the item is a car add $1000 shipping fee
+
+
         // If a car sold for over $50,000 add 4% luxury tax
         // As an auction I want to log certain sales so that I have an audit trail
         // Log all car sales
