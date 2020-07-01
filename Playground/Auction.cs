@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ApprovalTests.Core;
+using ApprovalUtilities.Utilities;
 using eBabyServices;
 
 namespace Playground
@@ -15,7 +16,7 @@ namespace Playground
 
     public class Auction
     {
-        private AuctionLogger logger = new AuctionLogger(Path.GetTempFileName());
+        public AuctionLogger logger = new AuctionLogger(Path.GetTempFileName());
         public User Seller { get; }
         public string ItemDescription { get; }
         public  int ItemPrice { get; }
@@ -24,10 +25,10 @@ namespace Playground
         public AuctionState State { get; internal set; }
         public Bid HighBid { get; private set; }
         public int AmountToSeller => (int) (HighBid.Price * 0.98);
-        public int ShippingFee { get; private set; }
+        public int ShippingFee { get; set; }
         public int FinalPrice => (int)(HighBid.Price + ShippingFee + LuxuryTax);
         public AuctionCategory Category { get; set; }
-        public int LuxuryTax { get; private set; }
+        public int LuxuryTax { get; set; }
 
 
         public Auction(User seller, string itemDescription, int itemPrice, DateTime startDateTime, DateTime endDateTime)
@@ -107,31 +108,7 @@ namespace Playground
         public void EndAuction()
         {
             State = AuctionState.Closed;
-            //calculate shipping fee
-            if (Category == AuctionCategory.DownloadableSoftware)
-            {
-                ShippingFee = 0;
-            }
-
-            else if (Category == AuctionCategory.Car)
-            {
-                logger.Log($"{Seller.UserName} is selling a {ItemDescription} ");
-                ShippingFee = 100000;
-                if (HighBid.Price > 5000000)
-                {
-                    LuxuryTax = (int) (HighBid.Price * 0.04);
-                }
-
-            }
-            else
-            {
-                ShippingFee = 1000;
-            }
-
-            if (HighBid.Price > 10_000_00)
-            {
-                logger.Log($"{Seller.UserName} is selling an item of {HighBid.Price} ");
-            }
+            AuctionHandlersFactory.GetAuctionHandlers().ForEach(h=>h.Handle(this));
 
             var emails = GetClosingEmailNotifications();
             foreach (var email in emails)
